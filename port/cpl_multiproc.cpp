@@ -1214,6 +1214,12 @@ CPLJoinableThread *CPLCreateJoinableThread(CPLThreadFunc pfnMain,
     if (hThread == nullptr)
         return nullptr;
 
+    // Testing hook: makes the thread finish before its handle is stored, as
+    // when this thread is preempted here.
+    if (CPLTestBool(CPLGetConfigOption(
+            "CPL_MULTIPROC_SIMULATE_THREAD_FINISHING_FIRST", "NO")))
+        WaitForSingleObject(hThread, INFINITE);
+
     psInfo->hThread = hThread;
     return reinterpret_cast<CPLJoinableThread *>(psInfo);
 }

@@ -124,6 +124,7 @@ constexpr static const char* const apszKnownConfigOptions[] =
    "CPL_MACHINE_IS_GCE", // from cpl_google_cloud.cpp
    "CPL_MAX_ERROR_REPORTS", // from cpl_error.cpp
    "CPL_MINIXML_RELAXED", // from cpl_minixml.cpp
+   "CPL_MULTIPROC_SIMULATE_THREAD_FINISHING_FIRST", // from cpl_multiproc.cpp
    "CPL_OPENSSL_INIT_ENABLED", // from cpl_http.cpp
    "CPL_OSS_TIMESTAMP", // from cpl_alibaba_oss.cpp
    "CPL_RSA_SHA256_Sign", // from cpl_sha256.cpp

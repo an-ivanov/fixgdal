@@ -5977,6 +5977,26 @@ TEST_F(test_cpl, CPLGetCurrentThreadCount)
 #endif
 }
 
+TEST_F(test_cpl, CPLCreateJoinableThread_thread_finishing_first)
+{
+#ifdef _WIN32
+    // The thread used to free its CPLStdCallThreadInfo as if it were
+    // detached when it finished before CPLCreateJoinableThread() had stored
+    // its handle, and CPLJoinThread() then freed it a second time.
+    CPLConfigOptionSetter oSetter(
+        "CPL_MULTIPROC_SIMULATE_THREAD_FINISHING_FIRST", "YES", false);
+    for (int i = 0; i < 10; ++i)
+    {
+        CPLJoinableThread *hThread =
+            CPLCreateJoinableThread([](void *) {}, nullptr);
+        ASSERT_NE(hThread, nullptr);
+        CPLJoinThread(hThread);
+    }
+#else
+    GTEST_SKIP() << "Windows specific";
+#endif
+}
+
 TEST_F(test_cpl, CPLHasPathTraversal)
 {
     EXPECT_TRUE(CPLHasPathTraversal("a/../b"));
