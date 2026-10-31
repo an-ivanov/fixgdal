@@ -1,3 +1,4 @@
+# Proof branch for OSGeo/gdal PR 15451, not for merging
 name: Windows builds
 
 on:
